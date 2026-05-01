@@ -1,9 +1,11 @@
+import Loginpage from "./pages/Loginpage"
 
 function App() {
   return (
-    <div>
-      <p>react connected successfully</p>
-    </div>
+    <>
+      <Loginpage />
+      <div>hey</div>
+    </>
   )
 }
 
