@@ -1,18 +1,32 @@
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     console.log("Email:", email);
     console.log("Password:", password);
+    
+    const correctPassword = "12345678";
+    const correctEmail = "user@example.com";
 
-    document.getElementsByTagName("input")[0].value = "";
-    document.getElementsByTagName("input")[1].value = "";
+    if(correctEmail === email && correctPassword === password) { 
+      setPassword("");
+      setEmail("");
+      navigate("/home");
+    }else {
+      setPassword("");
+      setEmail("");
+      setError("Invalid email or password");
+    }
+
     // Here you can send data to backend (Express)
     // fetch("http://localhost:5000/login", { ... })
   };
@@ -45,6 +59,7 @@ const LoginPage = () => {
         <button type="submit" style={styles.button}>
           Login
         </button>
+        <p style={styles.error}>{error}</p>
       </form>
     </div>
   );
@@ -84,6 +99,10 @@ const styles = {
     borderRadius: "5px",
     cursor: "pointer",
   },
+  error: {
+    color: "red",
+    textAlign: "center",
+  }
 };
 
 export default LoginPage;
