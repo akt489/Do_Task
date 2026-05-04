@@ -6,8 +6,13 @@ function Header() {
             justifyContent: "space-between",
             alignItems: "center",
             padding: "15px 30px",
-            backgroundColor: "#222",
+            backgroundColor: "#96bd6c",
             color: "white",
+        },
+        image: {
+            width: "40px",
+            height: "40px",
+            borderRadius: "50%"
         },
         navList: {
             display: "flex",
@@ -22,14 +27,12 @@ function Header() {
 
     return (
         <header style={styles.header}>
-            <h2>MyWebsite</h2>
+            <h2>GoTask</h2>
 
             <nav>
                 <ul style={styles.navList}>
-                    <li><a style={styles.link} href="/">Home</a></li>
-                    <li><a style={styles.link} href="/about">About</a></li>
-                    <li><a style={styles.link} href="/services">Services</a></li>
-                    <li><a style={styles.link} href="/contact">Contact</a></li>
+                    <li><a style={styles.link} href="/profile"><img src="#" style={styles.image} /></a></li>
+                    <li><a style={styles.link} href="/">Logout</a></li>
                 </ul>
             </nav>
         </header>

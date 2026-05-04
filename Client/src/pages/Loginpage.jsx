@@ -13,15 +13,15 @@ function LoginPage() {
 
     console.log("Email:", email);
     console.log("Password:", password);
-    
-    const correctPassword = "12345678";
+
+    const correctPassword = "1234";
     const correctEmail = "user@example.com";
 
-    if(correctEmail === email && correctPassword === password) { 
+    if (correctEmail === email && correctPassword === password) {
       setPassword("");
       setEmail("");
       navigate("/home");
-    }else {
+    } else {
       setPassword("");
       setEmail("");
       setError("Invalid email or password");
@@ -30,8 +30,6 @@ function LoginPage() {
     // Here you can send data to backend (Express)
     // fetch("http://localhost:5000/login", { ... })
   };
-
-  
 
   return (
     <div style={styles.container}>
