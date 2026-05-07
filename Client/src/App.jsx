@@ -6,6 +6,7 @@ import ProgressPage from "./pages/Progresspage"
 import TasksPage from "./pages/Taskspage"
 import EditProfilePage from "./pages/Editprofile"
 import Settings from "./pages/Settingspage"
+import Habits from "./pages/Habits"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/tasks" element={<TasksPage />} />
         <Route path="/editpage" element={<EditProfilePage />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/habits" element={<Habits />} />
       </Routes>
     </BrowserRouter>
   )

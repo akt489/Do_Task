@@ -1,128 +1,244 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import BackBtn from "../components/BackBtn";
 
+const styles = {
+    page: {
+        minHeight: "100vh",
+        background: "#eef1f6",
+        fontFamily: "sans-serif",
+        paddingBottom: "40px",
+    },
+
+    header: {
+        height: "180px",
+        background:
+            "linear-gradient(135deg, #9fe66d, #22651c)",
+        position: "relative",
+    },
+
+    profileCard: {
+        maxWidth: "700px",
+        margin: "-60px auto 0",
+        background: "#fff",
+        borderRadius: "16px",
+        boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+        padding: "80px 25px 25px",
+        position: "relative",
+    },
+
+    avatar: {
+        width: "120px",
+        height: "120px",
+        borderRadius: "50%",
+        objectFit: "cover",
+        border: "4px solid white",
+        position: "absolute",
+        top: "-60px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        background: "#ddd",
+    },
+
+    name: {
+        textAlign: "center",
+        fontSize: "22px",
+        fontWeight: "700",
+        marginTop: "10px",
+    },
+
+    subtitle: {
+        textAlign: "center",
+        color: "#666",
+        marginBottom: "20px",
+    },
+
+    section: {
+        marginTop: "20px",
+        padding: "15px",
+        borderRadius: "12px",
+        background: "#f7f8fa",
+        border: "1px solid #e4e6eb",
+    },
+
+    label: {
+        fontSize: "13px",
+        color: "#666",
+        marginBottom: "6px",
+        display: "block",
+    },
+
+    input: {
+        width: "100%",
+        padding: "10px",
+        borderRadius: "8px",
+        border: "1px solid #ccd0d5",
+        outline: "none",
+        fontSize: "14px",
+    },
+
+    buttonRow: {
+        display: "flex",
+        gap: "10px",
+        marginTop: "20px",
+    },
+
+    saveBtn: {
+        flex: 1,
+        padding: "12px",
+        borderRadius: "8px",
+        border: "none",
+        background: "#1877f2",
+        color: "white",
+        fontWeight: "600",
+        cursor: "pointer",
+    },
+
+    cancelBtn: {
+        flex: 1,
+        padding: "12px",
+        borderRadius: "8px",
+        border: "1px solid #ccd0d5",
+        background: "#fff",
+        cursor: "pointer",
+    },
+
+    message: {
+        textAlign: "center",
+        marginTop: "12px",
+        color: "green",
+    },
+
+    error: {
+        textAlign: "center",
+        marginTop: "12px",
+        color: "red",
+    },
+};
+
 export default function EditProfilePage() {
-    // initial user data (pretend this comes from backend or profile page)
     const [user, setUser] = useState({
         name: "Abraham Tilahun",
         username: "abraham_dev",
-        avatar: "https://i.pinimg.com/236x/83/bc/8b/83bc8b88cf6bc4b4e04d153a418cde62.jpg"
+        bio: "Computer Science student | Building skills daily 🚀",
+        avatar:
+            "https://i.pinimg.com/236x/83/bc/8b/83bc8b88cf6bc4b4e04d153a418cde62.jpg",
     });
 
     const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
 
-    const handleChange = (e) => {
-        setUser({
-            ...user,
-            [e.target.name]: e.target.value
-        });
+    const handleChange = useCallback((e) => {
+        const { name, value } = e.target;
+        setUser((prev) => ({ ...prev, [name]: value }));
+    }, []);
+
+    const validate = () => {
+        if (!user.name.trim()) return "Name cannot be empty";
+        if (!user.username.trim()) return "Username cannot be empty";
+        return null;
     };
 
     const saveProfile = () => {
-        setMessage("✅ Profile updated successfully!");
+        setMessage("");
+        setError("");
 
-        // optional: clear message after 2s
+        const err = validate();
+        if (err) return setError(err);
+
+        setMessage("Profile updated successfully!");
         setTimeout(() => setMessage(""), 2000);
     };
 
-    const styles = {
-        page: {
-            minHeight: "100vh",
-            background: "#f5f7fb",
-            padding: "30px",
-            fontFamily: "sans-serif"
-        },
-        container: {
-            maxWidth: "500px",
-            margin: "auto",
-            background: "#fff",
-            padding: "25px",
-            borderRadius: "14px",
-            boxShadow: "0 8px 20px rgba(0,0,0,0.08)"
-        },
-        title: {
-            fontSize: "22px",
-            fontWeight: "bold",
-            marginBottom: "20px"
-        },
-        avatarPreview: {
-            width: "100px",
-            height: "100px",
-            borderRadius: "50%",
-            objectFit: "cover",
-            display: "block",
-            margin: "0 auto 15px"
-        },
-        input: {
-            width: "100%",
-            padding: "10px",
-            marginBottom: "12px",
-            borderRadius: "8px",
-            border: "1px solid #ccc"
-        },
-        button: {
-            width: "100%",
-            padding: "10px",
-            background: "#4CAF50",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer"
-        },
-        message: {
-            textAlign: "center",
-            marginTop: "10px",
-            color: "green"
-        }
+    const resetProfile = () => {
+        setUser({
+            name: "Abraham Tilahun",
+            username: "abraham_dev",
+            bio: "Computer Science student | Building skills daily 🚀",
+            avatar:
+                "https://i.pinimg.com/236x/83/bc/8b/83bc8b88cf6bc4b4e04d153a418cde62.jpg",
+        });
     };
 
     return (
         <div style={styles.page}>
             <BackBtn />
-            <div style={styles.container}>
 
-                <div style={styles.title}>✏️ Edit Profile</div>
+            {/* Blue Header (Facebook style) */}
+            <div style={styles.header}></div>
 
-                {/* Avatar Preview */}
+            {/* Profile Card */}
+            <div style={styles.profileCard}>
                 <img
                     src={user.avatar}
                     alt="avatar"
-                    style={styles.avatarPreview}
+                    style={styles.avatar}
+                    onError={(e) => {
+                        e.target.src =
+                            "https://via.placeholder.com/120?text=User";
+                    }}
                 />
 
-                {/* Inputs */}
-                <input
-                    style={styles.input}
-                    name="name"
-                    value={user.name}
-                    onChange={handleChange}
-                    placeholder="Name"
-                />
+                <div style={styles.name}>{user.name}</div>
+                <div style={styles.subtitle}>Edit your profile details</div>
 
-                <input
-                    style={styles.input}
-                    name="username"
-                    value={user.username}
-                    onChange={handleChange}
-                    placeholder="Username"
-                />
+                {/* Name */}
+                <div style={styles.section}>
+                    <label style={styles.label}>Full Name</label>
+                    <input
+                        style={styles.input}
+                        name="name"
+                        value={user.name}
+                        onChange={handleChange}
+                    />
+                </div>
 
-                <input
-                    style={styles.input}
-                    name="avatar"
-                    value={user.avatar}
-                    onChange={handleChange}
-                    placeholder="Avatar URL"
-                />
+                {/* Username */}
+                <div style={styles.section}>
+                    <label style={styles.label}>Username</label>
+                    <input
+                        style={styles.input}
+                        name="username"
+                        value={user.username}
+                        onChange={handleChange}
+                    />
+                </div>
 
-                {/* Save Button */}
-                <button style={styles.button} onClick={saveProfile}>
-                    Save Changes
-                </button>
+                {/* Bio */}
+                <div style={styles.section}>
+                    <label style={styles.label}>Bio</label>
+                    <input
+                        style={styles.input}
+                        name="bio"
+                        value={user.bio}
+                        onChange={handleChange}
+                    />
+                </div>
 
-                {/* Success message */}
+                {/* Avatar */}
+                <div style={styles.section}>
+                    <label style={styles.label}>Profile Picture URL</label>
+                    <input
+                        style={styles.input}
+                        name="avatar"
+                        value={user.avatar}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                {/* Buttons */}
+                <div style={styles.buttonRow}>
+                    <button style={styles.saveBtn} onClick={saveProfile}>
+                        Save Changes
+                    </button>
+
+                    <button style={styles.cancelBtn} onClick={resetProfile}>
+                        Reset
+                    </button>
+                </div>
+
+                {/* Messages */}
                 {message && <div style={styles.message}>{message}</div>}
-
+                {error && <div style={styles.error}>{error}</div>}
             </div>
         </div>
     );

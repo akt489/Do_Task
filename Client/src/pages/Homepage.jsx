@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cards from "../components/Cards";
 import Header from "../components/Header";
-import Menue from "../components/Menue";
+import Sidebar from "../components/Sidebar";
 
 function Homepage() {
     const [tasks, setTasks] = useState([
@@ -125,7 +125,7 @@ function Homepage() {
     return (
         <div>
             <Header />
-            <Menue />
+            <Sidebar />
 
             <div style={styles.container}>
 
